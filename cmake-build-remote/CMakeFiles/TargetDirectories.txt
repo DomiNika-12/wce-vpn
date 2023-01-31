@@ -1,0 +1,3 @@
+/home/campus16/dbobik/test/tmp/tmp.PLj74MrscW/cmake-build-remote/CMakeFiles/rebuild_cache.dir
+/home/campus16/dbobik/test/tmp/tmp.PLj74MrscW/cmake-build-remote/CMakeFiles/dnsTest.dir
+/home/campus16/dbobik/test/tmp/tmp.PLj74MrscW/cmake-build-remote/CMakeFiles/edit_cache.dir
