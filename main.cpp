@@ -12,7 +12,6 @@ socklen_t from_size = sizeof(from);
 int main()
 {
     int iError = 0;
-
     iError = serv->CreateConnection();
     if (iError != 0)
     {
@@ -29,7 +28,6 @@ int main()
             printf("Error: %s\n", strerror(errno));
             close(serv->GetSocket());
             return 0;
-            continue;
         }
         char* ip_host = (char*)malloc(15);
         inet_ntop(AF_INET, &(from.sin_addr), ip_host,15);
@@ -39,12 +37,11 @@ int main()
         msg.processHeader(pcMsg);
         msg.printHeader();
         msg.processQuestion(pcMsg);
-        i++;
-        if (i > 50)
-        {
-            close(serv->GetSocket());
-            return 0;
-        }
-
+//        i++;
+//        if (i > 50)
+//        {
+//            close(serv->GetSocket());
+//            return 0;
+//        }
     }
 }

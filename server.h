@@ -8,7 +8,6 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-#include "types.h"
 
 #ifndef CHATAPP_SERVER_H
 #define CHATAPP_SERVER_H
@@ -26,13 +25,8 @@ private:
     socklen_t iFromSize;
 public:
     Server();
-    vector<ClientTable> clientData{};
     int CreateConnection();
-    int GetClientID(int iConSocketFd, IDHeader* pHeader);
-    int SendMsg(int iConSocketFd, char** ppcMsg, int iMsgSize);
-    int ReadMsg(int iConSocketFd, char** ppcMsg, int* piMsgSize);
     int GetSocket();
-    int GenerateClientID(char* pcIdPointer);
 };
 
 #endif //CHATAPP_SERVER_H

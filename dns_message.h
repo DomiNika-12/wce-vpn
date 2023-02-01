@@ -2,9 +2,6 @@
 // Created by Dominika Bobik on 1/28/23.
 //
 
-// Google.com query
-// 0xccee0100000100000000000006676f6f676c6503636f6d0000010001
-
 #ifndef DNS_DNS_HEADER_H
 #define DNS_DNS_HEADER_H
 
@@ -50,6 +47,5 @@ public:
     void printQuestion() const;
     void printHeader() const;
 };
-
 
 #endif //DNS_DNS_HEADER_H
