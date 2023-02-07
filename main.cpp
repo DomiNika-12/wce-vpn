@@ -1,47 +1,82 @@
 #include <iostream>
 #include <cstdlib>
 #include "server.h"
-#include "dns_message.h"
+#include "dnsMsg.h"
+#include "client.h"
 
 using namespace std;
 
-Server* serv = new Server();
-struct sockaddr_in from;
-socklen_t from_size = sizeof(from);
+#define MAX_MSG_SIZE 512
+server* serv = new server();
+client* cli = new client();
 
 int main()
 {
-    int iError = 0;
-    iError = serv->CreateConnection();
-    if (iError != 0)
+    int error = 0;
+    error = serv->createConnection();
+    if (error != 0)
     {
+        printf("Server failed to connect\n");
         exit(EXIT_FAILURE);
     }
 
-    int i  = 0;
-    size_t sz = 512*sizeof(char);
+    error = cli->createConnection();
+    if (error != 0)
+    {
+        printf("Client failed to connect\n");
+        exit(EXIT_FAILURE);
+    }
+
+    size_t msg_size = MAX_MSG_SIZE * sizeof(char);
     while (1)
     {
-        char* pcMsg = (char*) malloc(sz);
-        int bytesRCV = recvfrom(serv->GetSocket(), pcMsg, sz, 0, (struct sockaddr *) &from, &from_size);
+        printf("----------\n");
+        // Get new request from the client
+        char* pcMsg = (char*) malloc(msg_size);
+        int bytesRCV = recvfrom(serv->getSocket(), pcMsg, msg_size, 0, (struct sockaddr *) &serv->from, &serv->from_size);
         if (bytesRCV < 0){
             printf("Error: %s\n", strerror(errno));
-            close(serv->GetSocket());
-            return 0;
+            close(serv->getSocket());
+            return 1;
         }
-        char* ip_host = (char*)malloc(15);
-        inet_ntop(AF_INET, &(from.sin_addr), ip_host,15);
+        char* ip_host = (char*) malloc(15);
+        inet_ntop(AF_INET, &(serv->from.sin_addr), ip_host,15);
         printf("Message from: %s, size: %d\n", ip_host, bytesRCV);
         printf("\n");
-        dns_message msg = dns_message();
-        msg.processHeader(pcMsg);
-        msg.printHeader();
-        msg.processQuestion(pcMsg);
-//        i++;
-//        if (i > 50)
-//        {
-//            close(serv->GetSocket());
-//            return 0;
-//        }
+//        dnsMsg msg = dnsMsg();
+//        msg.processHeader(pcMsg);
+//        msg.printHeader();
+//        msg.processQuestion(pcMsg);
+
+        // Send request to the external server
+        int bytesSNDExt = sendto(cli->getSocket(), pcMsg, bytesRCV, 0, (struct sockaddr *) &cli->from, cli->from_size);
+        if (bytesSNDExt < 0){
+            printf("Failed to send msg Error: %s\n", strerror(errno));
+            exit(0);
+        }
+        printf("Msg sent to external server %d bytes\n", bytesSNDExt);
+
+        // Get the response from the external server
+        char* msgG = (char*) malloc(msg_size);
+        int bytesRCVExt = recvfrom(cli->getSocket(), msgG, msg_size, 0, (struct sockaddr *) &cli->from, &cli->from_size);
+        if (bytesRCVExt < 0){
+            printf("Failed to recv msg Error: %s\n", strerror(errno));
+            exit(0);
+        }
+        char* ip_host1 = (char*) malloc(15);
+        inet_ntop(AF_INET, &(cli->from.sin_addr), ip_host1,15);
+        printf("Message from: %s, size: %d\n", ip_host1, bytesRCVExt);
+
+
+        // Send response back to the client
+        int bytesSND = sendto(serv->getSocket(), msgG, bytesRCVExt, 0, (struct sockaddr *) &(serv->serv), serv->serv_size);
+        if (bytesSND < 0){
+            printf("Error: %s\n", strerror(errno));
+            close(serv->getSocket());
+            return 0;
+        }
+        printf("\nMessage sent back to: %s, %d bytes\n", ip_host, bytesSND);
+        printf("----------\n");
+
     }
 }

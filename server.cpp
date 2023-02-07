@@ -1,27 +1,27 @@
 #include "server.h"
 
-Server::Server()
+server::server()
 {
-    iSocketFd = 0;
-    iServSize = sizeof(serv);
-    bzero((char *) &serv, iServSize);
-    iFromSize = sizeof(from);
-    bzero((char *) &from, iFromSize);
+    socket_fd = 0;
+    serv_size = sizeof(serv);
+    bzero((char *) &serv, serv_size);
+    from_size = sizeof(from);
+    bzero((char *) &from, from_size);
 }
 
-int Server::CreateConnection()
+int server::createConnection()
 {
-    int iError = 0;
+    int error = 0;
 
-    iSocketFd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (iSocketFd == -1)
+    socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (socket_fd == -1)
     {
         printf("Error while creating socket\n");
-        iError = iSocketFd;
-        return iError;
+        error = socket_fd;
+        return error;
     }
 
-    printf("Socket fd: %d\n", iSocketFd);
+    printf("Socket fd: %d\n", socket_fd);
     bzero((char *) &serv, sizeof(serv));
 
     serv.sin_family = AF_INET;
@@ -30,25 +30,25 @@ int Server::CreateConnection()
 
     fflush(stdout);
     // Binding socket
-    iServSize = sizeof(serv);
-    iError = ::bind(iSocketFd, (struct sockaddr *) &serv, iServSize);
-    if (iError < 0)
+    serv_size = sizeof(serv);
+    error = ::bind(socket_fd, (struct sockaddr *) &serv, serv_size);
+    if (error < 0)
     {
         printf("Failed to bind the socket\n");
-        close(iSocketFd);
-        return iError;
+        close(socket_fd);
+        return error;
     }
 
-    printf("Server running\n");
+    printf("server running\n");
     printf("Port:       %d (network byte order)\n", serv.sin_port);
     printf("            %d (hostorder)\n", PORT);
     printf("Domain:     AF_INET\n");
     printf("Protocol:   UDP\n\n");
 
-    return iError;
+    return error;
 }
 
-int Server::GetSocket() {
-    return iSocketFd;
+int server::getSocket() {
+    return socket_fd;
 }
 

@@ -58,8 +58,14 @@ build CMakeFiles/dnsTest.dir/server.cpp.o: CXX_COMPILER__dnsTest_Debug /Users/do
   OBJECT_DIR = CMakeFiles/dnsTest.dir
   OBJECT_FILE_DIR = CMakeFiles/dnsTest.dir
 
-build CMakeFiles/dnsTest.dir/dns_message.cpp.o: CXX_COMPILER__dnsTest_Debug /Users/dominikabobik/CLionProjects/dnsTest/dns_message.cpp || cmake_object_order_depends_target_dnsTest
-  DEP_FILE = CMakeFiles/dnsTest.dir/dns_message.cpp.o.d
+build CMakeFiles/dnsTest.dir/dnsMsg.cpp.o: CXX_COMPILER__dnsTest_Debug /Users/dominikabobik/CLionProjects/dnsTest/dnsMsg.cpp || cmake_object_order_depends_target_dnsTest
+  DEP_FILE = CMakeFiles/dnsTest.dir/dnsMsg.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++14
+  OBJECT_DIR = CMakeFiles/dnsTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/dnsTest.dir
+
+build CMakeFiles/dnsTest.dir/client.cpp.o: CXX_COMPILER__dnsTest_Debug /Users/dominikabobik/CLionProjects/dnsTest/client.cpp || cmake_object_order_depends_target_dnsTest
+  DEP_FILE = CMakeFiles/dnsTest.dir/client.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++14
   OBJECT_DIR = CMakeFiles/dnsTest.dir
   OBJECT_FILE_DIR = CMakeFiles/dnsTest.dir
@@ -72,7 +78,7 @@ build CMakeFiles/dnsTest.dir/dns_message.cpp.o: CXX_COMPILER__dnsTest_Debug /Use
 #############################################
 # Link the executable dnsTest
 
-build dnsTest: CXX_EXECUTABLE_LINKER__dnsTest_Debug CMakeFiles/dnsTest.dir/main.cpp.o CMakeFiles/dnsTest.dir/server.cpp.o CMakeFiles/dnsTest.dir/dns_message.cpp.o
+build dnsTest: CXX_EXECUTABLE_LINKER__dnsTest_Debug CMakeFiles/dnsTest.dir/main.cpp.o CMakeFiles/dnsTest.dir/server.cpp.o CMakeFiles/dnsTest.dir/dnsMsg.cpp.o CMakeFiles/dnsTest.dir/client.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk
   OBJECT_DIR = CMakeFiles/dnsTest.dir
   POST_BUILD = :

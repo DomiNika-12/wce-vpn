@@ -3,4 +3,4 @@ project(dnsTest)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(dnsTest main.cpp server.h server.cpp dns_message.cpp dns_message.h)
+add_executable(dnsTest main.cpp server.h server.cpp dnsMsg.cpp dnsMsg.h client.cpp client.h)

@@ -26,9 +26,9 @@ enum op_code {
     status = 2
 };
 
-class dns_message {
+class dnsMsg {
 public:
-    dns_message();
+    dnsMsg();
     u_int16_t id = 0;
     u_int8_t qr = 0;
     u_int8_t opcode = 0;

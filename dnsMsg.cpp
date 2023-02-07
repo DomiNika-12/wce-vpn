@@ -3,19 +3,18 @@
 //
 
 #include <cstdio>
-#include "dns_message.h"
+#include "dnsMsg.h"
 
-void dns_message::printHeader() const {
+void dnsMsg::printHeader() const {
     printf("ID: %hu\n", id);
     printf("QR: %hu\n", qr);
     printf("OP code: %hu\n", opcode);
     printf("AA: %hu TC: %hu RD: %hu RA: %hu\n", aa, tc, rd, ra);
     printf("Z: %hu RCODE: %hu\n", z, rcode);
     printf("QDCOUNT: %hu, ANCOUNT %hu, NSCOUNT %hu, ARCOUNT %hu\n", qd_count, an_count, ns_count, ar_count);
-
 }
 
-int dns_message::processHeader(char *buff) {
+int dnsMsg::processHeader(char *buff) {
     id = (buff[0] >> 8) | buff[1];
     qr = buff[2] & 0x80;
     opcode = (buff[2] >> 3) & 0xF;
@@ -34,11 +33,11 @@ int dns_message::processHeader(char *buff) {
 
 
 
-dns_message::dns_message() {
+dnsMsg::dnsMsg() {
 
 }
 
-int dns_message::processQuestion(char *buff) {
+int dnsMsg::processQuestion(char *buff) {
     uint8_t label_length = buff[13];
     uint16_t qtype = 0;
     uint16_t qclass = 0;
@@ -57,6 +56,6 @@ int dns_message::processQuestion(char *buff) {
     return 0;
 }
 
-void dns_message::printQuestion() const {
+void dnsMsg::printQuestion() const {
 
 }

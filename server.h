@@ -16,17 +16,18 @@
 
 using namespace std;
 
-class Server {
+class server {
 private:
-    int iSocketFd;
-    struct sockaddr_in serv;
-    socklen_t iServSize;
-    struct sockaddr_in from;
-    socklen_t iFromSize;
+
 public:
-    Server();
-    int CreateConnection();
-    int GetSocket();
+    server();
+    int createConnection();
+    int getSocket();
+    int socket_fd;
+    struct sockaddr_in serv;
+    socklen_t serv_size;
+    struct sockaddr_in from;
+    socklen_t from_size;
 };
 
 #endif //CHATAPP_SERVER_H
