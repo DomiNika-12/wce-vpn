@@ -39,7 +39,6 @@ int server::createConnection()
         return error;
     }
 
-
     printf("+----------------------------------------\n");
     printf("| Server running\n");
     printf("| Port:       %d (network byte order)\n", serv.sin_port);

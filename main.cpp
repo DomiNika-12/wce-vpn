@@ -32,7 +32,7 @@ int main()
             close(serv->getSocket());
             close(cli->getSocket());
             free(pcMsg);
-            return 1;
+            exit(1);
         }
         char* ip_host = (char*) malloc(15);
         inet_ntop(AF_INET, &(serv->from.sin_addr), ip_host,15);
@@ -58,7 +58,7 @@ int main()
             close(cli->getSocket());
             free(pcMsg);
             free(ip_host);
-            exit(0);
+            exit(1);
         }
         printf("Msg sent to external server %d bytes\n", bytesSNDExt);
         free(pcMsg);
@@ -72,7 +72,7 @@ int main()
             close(serv->getSocket());
             close(cli->getSocket());
             free(msgG);
-            exit(0);
+            exit(1);
         }
         char* ip_host1 = (char*) malloc(15);
         inet_ntop(AF_INET, &(cli->from.sin_addr), ip_host1,15);
@@ -87,7 +87,7 @@ int main()
             printf("Failed to send msg Error: %s\n", strerror(errno));
             close(serv->getSocket());
             close(cli->getSocket());
-            return 0;
+            exit(1);
         }
         printf("\nMessage sent back to: %s, %d bytes\n", ip_host1, bytesSND);
         free(msgG);
