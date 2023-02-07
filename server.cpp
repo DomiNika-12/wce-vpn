@@ -39,11 +39,14 @@ int server::createConnection()
         return error;
     }
 
-    printf("server running\n");
-    printf("Port:       %d (network byte order)\n", serv.sin_port);
-    printf("            %d (hostorder)\n", PORT);
-    printf("Domain:     AF_INET\n");
-    printf("Protocol:   UDP\n\n");
+
+    printf("+----------------------------------------\n");
+    printf("| Server running\n");
+    printf("| Port:       %d (network byte order)\n", serv.sin_port);
+    printf("|             %d (hostorder)\n", PORT);
+    printf("| Domain:     AF_INET\n");
+    printf("| Protocol:   UDP\n");
+    printf("+----------------------------------------\n");
 
     return error;
 }

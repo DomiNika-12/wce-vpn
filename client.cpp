@@ -27,12 +27,12 @@ int client::createConnection()
     from.sin_port = htons(53);
     from.sin_addr.s_addr = inet_addr(EXTERNAL_SERVER_IP);
 
-    printf("Client running\n");
-    printf("Port:           %d (network byte order)\n", from.sin_port);
-    printf("                %d (hostorder)\n", PORT);
-    printf("server address: %s\n", EXTERNAL_SERVER_IP);
-    printf("Domain:         AF_INET\n");
-    printf("Protocol:       UDP\n\n");
+    printf(" Client running                         \n");
+    printf(" Port:           %d (network byte order)\n", from.sin_port);
+    printf("                 %d (hostorder)         \n", PORT);
+    printf(" Server address: %s                     \n", EXTERNAL_SERVER_IP);
+    printf(" Domain:         AF_INET                \n");
+    printf(" Protocol:       UDP                    \n");
 
     return error;
 }
