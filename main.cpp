@@ -48,8 +48,11 @@ int main()
         if (error != 0)
         {
             printf("Client failed to connect\n");
+            close(serv->getSocket());
+            free(pcMsg);
             exit(EXIT_FAILURE);
         }
+
         // Send request to the external server
         int bytesSNDExt = sendto(cli->getSocket(), pcMsg, bytesRCV, 0, (struct sockaddr *) &cli->from, cli->from_size);
         if (bytesSNDExt < 0){
@@ -61,8 +64,6 @@ int main()
             exit(1);
         }
         printf("Msg sent to external server %d bytes\n", bytesSNDExt);
-        free(pcMsg);
-        free(ip_host);
 
         // Get the response from the external server
         char* msgG = (char*) malloc(msg_size);
@@ -72,6 +73,8 @@ int main()
             close(serv->getSocket());
             close(cli->getSocket());
             free(msgG);
+            free(pcMsg);
+            free(ip_host);
             exit(1);
         }
         char* ip_host1 = (char*) malloc(15);
@@ -82,17 +85,26 @@ int main()
         close(cli->getSocket());
 
         // Send response back to the client
-        int bytesSND = sendto(serv->getSocket(), msgG, bytesRCVExt, 0, (struct sockaddr *) &(serv->serv), serv->serv_size);
+        int bytesSND = sendto(serv->getSocket(), msgG, bytesRCVExt, 0, (struct sockaddr *) &(serv->from), serv->from_size);
         if (bytesSND < 0){
             printf("Failed to send msg Error: %s\n", strerror(errno));
             close(serv->getSocket());
             close(cli->getSocket());
+            free(msgG);
+            free(pcMsg);
+            free(ip_host);
+            free(ip_host1);
             exit(1);
         }
-        printf("\nMessage sent back to: %s, %d bytes\n", ip_host1, bytesSND);
-        free(msgG);
-        free(ip_host1);
-        printf("----------\n");
+        char* ip_host2 = (char*) malloc(15);
+        inet_ntop(AF_INET, &(serv->serv.sin_addr), ip_host2,15);
+        printf("\nMessage sent back to: %s, %d bytes\n", ip_host2, bytesSND);
 
+        free(msgG);
+        free(pcMsg);
+        free(ip_host);
+        free(ip_host1);
+        free(ip_host2);
+        printf("----------\n");
     }
 }

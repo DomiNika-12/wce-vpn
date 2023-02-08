@@ -32,7 +32,7 @@ int client::createConnection()
     printf("                 %d (hostorder)         \n", PORT);
     printf(" Server address: %s                     \n", EXTERNAL_SERVER_IP);
     printf(" Domain:         AF_INET                \n");
-    printf(" Protocol:       UDP                    \n");
+    printf(" Protocol:       UDP                    \n\n");
 
     return error;
 }
